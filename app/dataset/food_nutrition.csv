@@ -1,0 +1,12 @@
+no,name,protein,calcium,fat,carbohydrates,vitamins
+101,dessert,3.76,89.47,17.298,30.29,"A, B"
+102,seafood,28.795,11.698,18.327,179,"B12, D, Mineral"
+103,bread,8.57,28.257,1.69,75.563,"B1, B2"
+104,fried food,5.221,17.59,15.875,30.79,"C"
+105,meat,19,20,23,0,"A, B6, B12"
+106,dairy product,6,250,7,28,"C"
+107,rice,14,17,5.9,141,"B1, B2, B3"
+108,noodles-pasta,16,34,5,14,"A, B9"
+109,soup,6.1,7.2,2.9,8.5,"B3, B9, K"
+110,vegetables-fruit,1.5,27,0.6,31,"A, C, E, K"
+34,egg,12.65,0.06,22.55,8.25,"A"
