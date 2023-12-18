@@ -1,6 +1,8 @@
 from flask import request, jsonify
 from app import app
 from app.model_utils import predict_food
+import requests
+from io import BytesIO
 
 class PredictionResponse:
     def __init__(self, **kwargs):
@@ -8,14 +10,28 @@ class PredictionResponse:
 
 @app.route("/predict/", methods=["POST"])
 def predict():
-    if "image" not in request.files:
-        return jsonify({"error": "No image provided"}), 400
+    # Get URL image from request
+    image_url = request.json.get("image_url")
+    print(image_url)
 
-    image = request.files["image"]
+    if not image_url:
+        return jsonify({"error": "No image URL provided"}), 400
+
+    # Download image from URL
+    try:
+        response = requests.get(image_url)
+        response.raise_for_status()
+        image = BytesIO(response.content)
+    except requests.exceptions.RequestException as e:
+        return jsonify({"error": f"Failed to fetch image from URL: {str(e)}"}), 400
+
+    # Store image temporary
     image_path = "app/static/uploaded_images/temp_image.jpg"
-    image.save(image_path)
+    with open(image_path, "wb") as f:
+        f.write(response.content)
 
-    result = predict_food(image_path)
+    # Do prediction
+    result = predict_food(image)
     response_json = PredictionResponse(**result).__dict__
     
     return jsonify(response_json)
